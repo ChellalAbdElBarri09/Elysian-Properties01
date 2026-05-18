@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<title>Elysian Properties — Ultimate Refined Edition</title>
+
+<style>
+
+:root{
+--bg:#eef2f3;
+--surface:rgba(255,255,255,.92);
+--navy:#0d162d;
+--navy-soft:#182542;
+--gold:#d6b25e;
+--gold-soft:rgba(214,178,94,.12);
+--danger:#a32035;
+--success:#1f6d4d;
+--text:#111827;
+--muted:#6b7280;
+--line:rgba(0,0,0,.06);
+--shadow:0 10px 35px rgba(11,19,43,.08);
+--radius:24px;
+--transition:.25s ease;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(to bottom,#f7f8f9,#edf1f3);
+color:var(--text);
+min-height:100vh;
+padding-top:92px;
+padding-bottom:110px;
+overflow-x:hidden;
+}
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
+background:rgba(13,22,45,.95);
+backdrop-filter:blur(12px);
+padding:18px 20px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.brand{
+color:var(--gold);
+font-size:1.5rem;
+font-weight:700;
+letter-spacing:.3px;
+}
+
+.tagline{
+color:rgba(255,255,255,.65);
+font-size:.72rem;
+margin-top:2px;
+letter-spacing:1.2px;
+text-transform:uppercase;
+}
+
+.container{
+width:100%;
+max-width:640px;
+margin:auto;
+padding:18px;
+}
+
+.view{
+display:none;
+animation:fade .25s ease;
+}
+
+.view.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.card{
+background:var(--surface);
+border-radius:var(--radius);
+padding:22px;
+margin-bottom:18px;
+box-shadow:var(--shadow);
+backdrop-filter:blur(8px);
+}
+
+.section-title{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
+.section-title h2{
+font-size:1rem;
+font-weight:700;
+color:var(--navy);
+letter-spacing:.2px;
+}
+
+.section-sub{
+color:var(--muted);
+font-size:.78rem;
+margin-top:4px;
+}
+
+.hero-metric{
+background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+color:white;
+border-radius:28px;
+padding:24px;
+margin-bottom:18px;
+position:relative;
+overflow:hidden;
+box-shadow:0 18px 45px rgba(13,22,45,.22);
+isolation:isolate;
+}
+
+.hero-metric::after{
+content:"";
+position:absolute;
+width:220px;
+height:220px;
+background:rgba(255,255,255,.04);
+border-radius:50%;
+right:-80px;
+top:-80px;
+z-index:-1;
+}
+
+.metric-label{
+font-size:.76rem;
+opacity:.7;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.metric-value{
+font-size:2rem;
+font-weight:800;
+margin-top:8px;
+color:var(--gold);
+line-height:1.2;
+}
+
+.metric-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+
+.metric-card{
+background:rgba(255,255,255,.9);
+border-radius:22px;
+padding:18px;
+box-shadow:var(--shadow);
+}
+
+.metric-card h3{
+font-size:.74rem;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:1px;
+margin-bottom:10px;
+}
+
+.metric-card p{
+font-size:1.1rem;
+font-weight:700;
+color:var(--navy);
+}
+
+.budget-edit{
+position:absolute;
+top:18px;
+right:18px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+padding:8px 14px;
+border-radius:999px;
+font-size:.75rem;
+cursor:pointer;
+z-index:20;
+}
+
+.progress-wrap{
+margin-top:18px;
+}
+
+.progress-bar{
+width:100%;
+height:10px;
+background:rgba(255,255,255,.08);
+border-radius:999px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+background:linear-gradient(to right,var(--gold),#ffe5a4);
+border-radius:999px;
+transition:width .4s ease;
+}
+
+.progress-meta{
+margin-top:8px;
+font-size:.78rem;
+opacity:.75;
+}
+
+.inventory-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+
+.inv-card{
+background:linear-gradient(135deg,#10192f,#1d2a4a);
+color:white;
+border-radius:22px;
+padding:18px;
+position:relative;
+}
+
+.inv-name{
+font-weight:700;
+font-size:.95rem;
+}
+
+.inv-unit{
+font-size:.72rem;
+opacity:.65;
+margin-top:3px;
+}
+
+.qty{
+font-size:2rem;
+font-weight:800;
+margin:16px 0;
+color:var(--gold);
+}
+
+.inv-controls{
+display:flex;
+justify-content:center;
+gap:12px;
+}
+
+.btn-qty{
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:rgba(255,255,255,.1);
+color:white;
+font-size:1.2rem;
+cursor:pointer;
+transition:var(--transition);
+}
+
+.btn-qty:active{
+transform:scale(.94);
+background:var(--gold);
+}
+
+.delete-icon{
+position:absolute;
+top:12px;
+right:14px;
+opacity:.45;
+cursor:pointer;
+transition:var(--transition);
+}
+
+.delete-icon:hover{
+opacity:1;
+}
+
+input,
+select{
+width:100%;
+border:none;
+background:rgba(240,243,245,.9);
+border-radius:18px;
+padding:16px;
+margin-bottom:14px;
+font-size:.95rem;
+color:var(--text);
+outline:none;
+transition:var(--transition);
+}
+
+input:focus,
+select:focus{
+background:white;
+box-shadow:0 0 0 3px rgba(214,178,94,.15);
+}
+
+.btn-main{
+width:100%;
+border:none;
+background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+color:white;
+border-radius:20px;
+padding:18px;
+font-size:.95rem;
+font-weight:700;
+cursor:pointer;
+transition:var(--transition);
+box-shadow:0 10px 25px rgba(11,19,43,.18);
+}
+
+.btn-main:active{
+transform:scale(.98);
+}
+
+.invoice-card,
+.task-card,
+.timeline-card{
+background:rgba(255,255,255,.92);
+border-radius:24px;
+padding:18px;
+margin-bottom:14px;
+box-shadow:var(--shadow);
+}
+
+.invoice-card{
+border-left:5px solid var(--danger);
+}
+
+.invoice-card.paid{
+border-left-color:var(--success);
+}
+
+.invoice-progress{
+height:10px;
+background:#eceff3;
+border-radius:999px;
+overflow:hidden;
+margin-top:14px;
+}
+
+.invoice-progress-fill{
+height:100%;
+background:linear-gradient(to right,var(--gold),#ffe5a4);
+}
+
+.row-between{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+}
+
+.muted{
+color:var(--muted);
+font-size:.82rem;
+margin-top:8px;
+}
+
+.status-pill{
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:6px 12px;
+border-radius:999px;
+font-size:.72rem;
+font-weight:700;
+margin-top:12px;
+}
+
+.paid-pill{
+background:rgba(31,109,77,.12);
+color:var(--success);
+}
+
+.pending-pill{
+background:rgba(163,32,53,.12);
+color:var(--danger);
+}
+
+.task-card{
+border-left:5px solid var(--gold);
+transition:var(--transition);
+cursor:pointer;
+}
+
+.task-card.completed{
+opacity:.72;
+border-left-color:var(--success);
+}
+
+.task-card.completed .task-title{
+text-decoration:line-through;
+}
+
+.task-expanded{
+margin-top:18px;
+padding-top:16px;
+border-top:1px solid rgba(0,0,0,.06);
+animation:fade .25s ease;
+}
+
+.complete-btn{
+width:100%;
+margin-top:14px;
+border:none;
+background:var(--navy);
+color:white;
+padding:14px;
+border-radius:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+.task-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:14px;
+}
+
+.task-title{
+font-size:1rem;
+font-weight:700;
+color:var(--navy);
+}
+
+.task-meta{
+margin-top:6px;
+color:var(--muted);
+font-size:.78rem;
+line-height:1.5;
+}
+
+.badge{
+display:inline-block;
+margin-top:14px;
+padding:6px 12px;
+border-radius:999px;
+font-size:.72rem;
+font-weight:700;
+text-transform:uppercase;
+}
+
+.high{
+background:rgba(163,32,53,.12);
+color:var(--danger);
+}
+
+.medium{
+background:rgba(214,178,94,.14);
+color:#8c6b1f;
+}
+
+.low{
+background:rgba(31,109,77,.12);
+color:var(--success);
+}
+
+.file-link{
+display:inline-block;
+margin-top:12px;
+color:var(--navy);
+font-size:.82rem;
+text-decoration:underline;
+cursor:pointer;
+}
+
+.empty-state{
+text-align:center;
+padding:28px 18px;
+color:var(--muted);
+}
+
+.empty-state h3{
+color:var(--navy);
+margin-bottom:8px;
+font-size:1rem;
+}
+
+.bottom-nav{
+position:fixed;
+left:12px;
+right:12px;
+bottom:12px;
+background:rgba(13,22,45,.94);
+backdrop-filter:blur(14px);
+border-radius:26px;
+display:flex;
+justify-content:space-around;
+padding:12px 10px;
+box-shadow:0 20px 45px rgba(0,0,0,.22);
+z-index:1000;
+}
+
+.nav-item{
+flex:1;
+color:rgba(255,255,255,.5);
+text-align:center;
+cursor:pointer;
+transition:var(--transition);
+border-radius:18px;
+padding:10px 6px;
+font-size:.72rem;
+font-weight:600;
+}
+
+.nav-item span{
+display:block;
+font-size:1.2rem;
+margin-bottom:4px;
+}
+
+.nav-item.active{
+color:var(--gold);
+background:rgba(255,255,255,.06);
+}
+
+.danger-zone{
+text-align:center;
+margin-top:28px;
+}
+
+.danger-zone button{
+background:transparent;
+border:none;
+color:var(--danger);
+opacity:.7;
+font-size:.78rem;
+margin-top:10px;
+cursor:pointer;
+}
+
+@media(max-width:420px){
+
+.inventory-grid,
+.metric-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="brand">Elysian Properties</div>
+<div class="tagline">Anchored in Eternity</div>
+</header>
+
+<div class="container">
+
+<section id="dashboard" class="view active">
+
+<div class="hero-metric">
+
+<button class="budget-edit" onclick="editBudget()">
+Edit Budget
+</button>
+
+<div class="metric-label">
+Total Project Budget
+</div>
+
+<div class="metric-value" id="m-budget">
+0 DZD
+</div>
+
+<div class="progress-wrap">
+
+<div class="progress-bar">
+<div class="progress-fill" id="budget-progress"></div>
+</div>
+
+<div class="progress-meta" id="budget-progress-label">
+0% Utilized
+</div>
+
+</div>
+</div>
+
+<div class="metric-grid">
+
+<div class="metric-card">
+<h3>Total Spent</h3>
+<p id="m-spent">0 DZD</p>
+</div>
+
+<div class="metric-card">
+<h3>Committed</h3>
+<p id="m-committed">0 DZD</p>
+</div>
+
+<div class="metric-card">
+<h3>Remaining</h3>
+<p id="m-balance">0 DZD</p>
+</div>
+
+<div class="metric-card">
+<h3>Total Tasks</h3>
+<p id="m-tasks">0</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="section-title">
+
+<div>
+<h2>Site Inventory</h2>
+<div class="section-sub">
+Live material quantity tracking
+</div>
+</div>
+
+<div onclick="addMaterialPrompt()" style="font-size:1.6rem; cursor:pointer; color:var(--gold);">
+＋
+</div>
+
+</div>
+
+<div id="inventoryList" class="inventory-grid"></div>
+
+</div>
+
+<div class="danger-zone">
+
+<button onclick="exportBackup()">
+Export Backup
+</button>
+
+<br>
+
+<button onclick="resetAllData()">
+Reset Entire Project
+</button>
+
+</div>
+
+</section>
+
+<section id="financials" class="view">
+
+<div class="card">
+
+<div class="section-title">
+<div>
+<h2>Financial Operations</h2>
+<div class="section-sub">
+Track invoices and outgoing commitments
+</div>
+</div>
+</div>
+
+<input type="text" id="v-name" placeholder="Vendor / Service Name" />
+<input type="number" id="v-total" placeholder="Total Invoice Amount (DZD)" />
+<input type="number" id="v-paid" placeholder="Initial Payment (DZD)" />
+
+<button class="btn-main" onclick="addInvoice()">
+Save Invoice
+</button>
+
+</div>
+
+<div id="invoiceList"></div>
+
+</section>
+
+<section id="timeline" class="view">
+
+<div class="card">
+
+<div class="section-title">
+<div>
+<h2>Project Timeline</h2>
+<div class="section-sub">
+Milestones and delivery planning
+</div>
+</div>
+</div>
+
+<input type="text" id="t-name" placeholder="Phase Title" />
+<input type="date" id="t-end" />
+
+<button class="btn-main" onclick="addTimeline()">
+Add Timeline Phase
+</button>
+
+</div>
+
+<div id="timelineList"></div>
+
+</section>
+
+<section id="operations" class="view">
+
+<div class="card">
+
+<div class="section-title">
+<div>
+<h2>Operations Center</h2>
+<div class="section-sub">
+Daily site management and supervision
+</div>
+</div>
+</div>
+
+<input type="text" id="op-title" placeholder="Task Description" />
+
+<div style="display:flex; gap:12px;">
+<input type="time" id="op-time" style="flex:1" />
+<input type="text" id="op-supervisor" placeholder="Supervisor" style="flex:1" />
+</div>
+
+<select id="op-priority">
+<option value="High">High Priority</option>
+<option value="Medium" selected>Medium Priority</option>
+<option value="Low">Low Priority</option>
+</select>
+
+<input type="file" id="op-file" accept="image/*,.pdf" />
+
+<button class="btn-main" onclick="addTask()">
+Deploy Task
+</button>
+
+</div>
+
+<div id="taskList"></div>
+
+</section>
+
+</div>
+
+<nav class="bottom-nav">
+
+<div class="nav-item active" onclick="showView('dashboard', this)">
+<span>⌂</span>
+Dashboard
+</div>
+
+<div class="nav-item" onclick="showView('financials', this)">
+<span>⛃</span>
+Finance
+</div>
+
+<div class="nav-item" onclick="showView('timeline', this)">
+<span>◷</span>
+Timeline
+</div>
+
+<div class="nav-item" onclick="showView('operations', this)">
+<span>☑</span>
+Ops
+</div>
+
+</nav>
+
+<script>
+
+const STORAGE_KEY = 'elysian_refined_final_v10';
+
+const DB_NAME = 'elysian_files';
+const STORE_NAME = 'attachments';
+
+function openDatabase(){
+
+return new Promise((resolve,reject)=>{
+
+const request = indexedDB.open(DB_NAME,1);
+
+request.onupgradeneeded = function(e){
+e.target.result.createObjectStore(STORE_NAME);
+};
+
+request.onsuccess = () => resolve(request.result);
+
+request.onerror = () => reject(request.error);
+
+});
+
+}
+
+async function saveFile(file){
+
+const db = await openDatabase();
+
+return new Promise((resolve,reject)=>{
+
+const id = crypto.randomUUID();
+
+const tx = db.transaction(STORE_NAME,'readwrite');
+
+tx.objectStore(STORE_NAME).put(file,id);
+
+tx.oncomplete = () => resolve(id);
+
+tx.onerror = () => reject(tx.error);
+
+});
+
+}
+
+async function getFile(id){
+
+const db = await openDatabase();
+
+return new Promise((resolve,reject)=>{
+
+const tx = db.transaction(STORE_NAME,'readonly');
+
+const req = tx.objectStore(STORE_NAME).get(id);
+
+req.onsuccess = () => resolve(req.result);
+
+req.onerror = () => reject(req.error);
+
+});
+
+}
+
+const defaultState = {
+
+budget:0,
+
+inventory:[
+{name:'Cement',qty:0,unit:'Bags'},
+{name:'Steel',qty:0,unit:'Tons'}
+],
+
+invoices:[],
+tasks:[],
+timeline:[]
+
+};
+
+let state = loadState();
+
+function loadState(){
+
+try{
+
+const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+return saved || structuredClone(defaultState);
+
+}catch{
+
+return structuredClone(defaultState);
+
+}
+
+}
+
+function save(){
+
+localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+
+render();
+
+}
+
+function currency(value){
+
+return Number(value || 0).toLocaleString() + ' DZD';
+
+}
+
+function render(){
+
+const totalSpent = state.invoices.reduce((sum,inv)=>{
+
+const paid = inv.payments
+? inv.payments.reduce((a,b)=>a+b,0)
+: (inv.paid || 0);
+
+return sum + Number(paid);
+
+},0);
+
+const totalCommitted = state.invoices.reduce((sum,inv)=>{
+
+return sum + Number(inv.total || 0);
+
+},0);
+
+const remaining = Math.max(state.budget - totalCommitted,0);
+
+const progress = state.budget > 0
+? Math.min((totalCommitted / state.budget) * 100,100)
+: 0;
+
+document.getElementById('m-budget').innerText = currency(state.budget);
+
+document.getElementById('m-spent').innerText = currency(totalSpent);
+
+document.getElementById('m-committed').innerText = currency(totalCommitted);
+
+document.getElementById('m-balance').innerText = currency(remaining);
+
+document.getElementById('m-tasks').innerText = state.tasks.length;
+
+document.getElementById('budget-progress').style.width = progress + '%';
+
+document.getElementById('budget-progress-label').innerText =
+progress.toFixed(0) + '% Budget Utilized';
+
+renderInventory();
+
+renderInvoices();
+
+renderTasks();
+
+renderTimeline();
+
+}
+
+function renderInventory(){
+
+const container = document.getElementById('inventoryList');
+
+if(!state.inventory.length){
+
+container.innerHTML = emptyState(
+'No materials added yet',
+'Add your first construction material.'
+);
+
+return;
+
+}
+
+container.innerHTML = state.inventory.map((item,idx)=>`
+
+<div class="inv-card">
+
+<div class="delete-icon" onclick="deleteMaterial(${idx})">
+✕
+</div>
+
+<div class="inv-name">${item.name}</div>
+
+<div class="inv-unit">${item.unit}</div>
+
+<div class="qty">${item.qty}</div>
+
+<div class="inv-controls">
+
+<button class="btn-qty" onclick="updateInv(${idx},-1)">
+−
+</button>
+
+<button class="btn-qty" onclick="updateInv(${idx},1)">
++
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+function renderInvoices(){
+
+const container = document.getElementById('invoiceList');
+
+if(!state.invoices.length){
+
+container.innerHTML = emptyState(
+'No invoices recorded',
+'Your financial operations will appear here.'
+);
+
+return;
+
+}
+
+container.innerHTML = state.invoices.map((inv,idx)=>{
+
+const paid = inv.payments
+? inv.payments.reduce((a,b)=>a+b,0)
+: (inv.paid || 0);
+
+const isPaid = paid >= Number(inv.total);
+
+const progress = (paid / inv.total) * 100;
+
+return `
+
+<div class="invoice-card ${isPaid ? 'paid' : ''}">
+
+<div class="row-between">
+
+<strong>${inv.vendor}</strong>
+
+<div onclick="deleteInvoice(${idx})"
+style="cursor:pointer;color:var(--danger);">
+✕
+</div>
+
+</div>
+
+<div class="muted">
+Paid ${currency(paid)} / ${currency(inv.total)}
+</div>
+
+<div class="invoice-progress">
+<div class="invoice-progress-fill"
+style="width:${progress}%">
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+<div class="status-pill ${isPaid ? 'paid-pill' : 'pending-pill'}">
+${isPaid ? '● Fully Paid' : '● In Progress'}
+</div>
+
+<button onclick="addPayment(${idx})"
+style="
+background:none;
+border:1px solid var(--gold);
+color:var(--gold);
+border-radius:8px;
+padding:6px 10px;
+font-size:.72rem;
+margin-top:10px;
+cursor:pointer;
+">
+Add Payment
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+function renderTasks(){
+
+const container = document.getElementById('taskList');
+
+if(!state.tasks.length){
+
+container.innerHTML = emptyState(
+'No active operations',
+'Deploy your first operational task.'
+);
+
+return;
+
+}
+
+container.innerHTML = state.tasks.map((task,idx)=>`
+
+<div class="task-card ${task.done ? 'completed' : ''}"
+onclick="expandTask(${idx})">
+
+<div class="task-top">
+
+<div>
+
+<div class="task-title">
+${task.title}
+</div>
+
+<div class="task-meta">
+
+🕙 ${task.time || 'Not Set'}
+
+<br>
+
+👤 ${task.supervisor || 'No Supervisor'}
+
+</div>
+
+</div>
+
+<div style="font-size:1.4rem;">
+${task.done ? '✅' : '⭕'}
+</div>
+
+</div>
+
+<div class="badge ${task.priority.toLowerCase()}">
+${task.priority} Priority
+</div>
+
+${task.fileId ? `
+
+<div class="file-link"
+onclick="event.stopPropagation(); openFile('${task.fileId}')">
+
+📎 View Attachment
+
+</div>
+
+` : ''}
+
+${task.expanded ? `
+
+<div class="task-expanded">
+
+<div class="task-meta">
+Created:
+${new Date(task.createdAt).toLocaleString()}
+</div>
+
+<button class="complete-btn"
+onclick="event.stopPropagation(); toggleTask(${idx})">
+
+${task.done ? 'Mark Pending' : 'Mark Completed'}
+
+</button>
+
+</div>
+
+` : ''}
+
+</div>
+
+`).join('');
+
+}
+
+function renderTimeline(){
+
+const container = document.getElementById('timelineList');
+
+if(!state.timeline.length){
+
+container.innerHTML = emptyState(
+'No timeline phases',
+'Start planning your construction milestones.'
+);
+
+return;
+
+}
+
+container.innerHTML = state.timeline.map((item,idx)=>`
+
+<div class="timeline-card">
+
+<div class="row-between">
+
+<strong>${item.name}</strong>
+
+<div onclick="deleteTimeline(${idx})"
+style="cursor:pointer;color:var(--danger);">
+
+✕
+
+</div>
+
+</div>
+
+<div class="muted">
+Deadline: ${item.end}
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+function emptyState(title,desc){
+
+return `
+
+<div class="empty-state">
+
+<h3>${title}</h3>
+
+<p>${desc}</p>
+
+</div>
+
+`;
+
+}
+
+function editBudget(){
+
+const newBudget = prompt(
+'Update Total Project Budget (DZD)',
+state.budget
+);
+
+if(newBudget === null) return;
+
+const parsed = Number(newBudget);
+
+if(isNaN(parsed) || parsed < 0){
+
+alert('Invalid budget value');
+
+return;
+
+}
+
+state.budget = parsed;
+
+save();
+
+}
+
+function addInvoice(){
+
+const vendor =
+document.getElementById('v-name').value.trim();
+
+const total =
+Number(document.getElementById('v-total').value);
+
+const initialPaid =
+Number(document.getElementById('v-paid').value || 0);
+
+if(!vendor){
+
+alert('Vendor name required');
+
+return;
+
+}
+
+if(isNaN(total) || total <= 0){
+
+alert('Invalid invoice amount');
+
+return;
+
+}
+
+if(initialPaid > total){
+
+alert('Initial payment exceeds total');
+
+return;
+
+}
+
+state.invoices.unshift({
+
+vendor,
+total,
+payments:[initialPaid],
+createdAt:Date.now()
+
+});
+
+document.getElementById('v-name').value = '';
+document.getElementById('v-total').value = '';
+document.getElementById('v-paid').value = '';
+
+save();
+
+}
+
+function addPayment(idx){
+
+const amount = Number(prompt('Payment Amount'));
+
+if(!amount || amount <= 0) return;
+
+const invoice = state.invoices[idx];
+
+const currentPaid = invoice.payments
+? invoice.payments.reduce((a,b)=>a+b,0)
+: 0;
+
+if(currentPaid + amount > invoice.total){
+
+alert('Payment exceeds invoice total');
+
+return;
+
+}
+
+invoice.payments.push(amount);
+
+save();
+
+}
+
+function deleteInvoice(idx){
+
+if(confirm('Delete this invoice permanently?')){
+
+state.invoices.splice(idx,1);
+
+save();
+
+}
+
+}
+
+function updateInv(idx,value){
+
+state.inventory[idx].qty =
+Math.max(0,state.inventory[idx].qty + value);
+
+save();
+
+}
+
+function addMaterialPrompt(){
+
+const name = prompt('Material Name');
+
+if(!name) return;
+
+const unit = prompt('Unit (Bags, Tons, m³...)');
+
+if(!unit) return;
+
+state.inventory.push({
+
+name:name.trim(),
+qty:0,
+unit:unit.trim()
+
+});
+
+save();
+
+}
+
+function deleteMaterial(idx){
+
+if(confirm('Remove this material?')){
+
+state.inventory.splice(idx,1);
+
+save();
+
+}
+
+}
+
+async function addTask(){
+
+const title =
+document.getElementById('op-title').value.trim();
+
+if(!title){
+
+alert('Task title required');
+
+return;
+
+}
+
+const fileInput =
+document.getElementById('op-file');
+
+const file = fileInput.files[0];
+
+let fileId = null;
+
+if(file){
+
+fileId = await saveFile(file);
+
+}
+
+state.tasks.unshift({
+
+title,
+time:document.getElementById('op-time').value,
+supervisor:document.getElementById('op-supervisor').value.trim(),
+priority:document.getElementById('op-priority').value,
+fileId,
+done:false,
+expanded:false,
+createdAt:Date.now()
+
+});
+
+document.getElementById('op-title').value = '';
+
+document.getElementById('op-time').value = '';
+
+document.getElementById('op-supervisor').value = '';
+
+document.getElementById('op-file').value = '';
+
+save();
+
+}
+
+function expandTask(idx){
+
+state.tasks[idx].expanded =
+!state.tasks[idx].expanded;
+
+save();
+
+}
+
+function toggleTask(idx){
+
+state.tasks[idx].done =
+!state.tasks[idx].done;
+
+save();
+
+}
+
+async function openFile(id){
+
+const file = await getFile(id);
+
+if(!file){
+
+alert('Attachment missing');
+
+return;
+
+}
+
+const url = URL.createObjectURL(file);
+
+window.open(url,'_blank');
+
+}
+
+function addTimeline(){
+
+const name =
+document.getElementById('t-name').value.trim();
+
+const end =
+document.getElementById('t-end').value;
+
+if(!name || !end){
+
+alert('Complete all timeline fields');
+
+return;
+
+}
+
+state.timeline.push({
+
+name,
+end
+
+});
+
+document.getElementById('t-name').value = '';
+
+document.getElementById('t-end').value = '';
+
+save();
+
+}
+
+function deleteTimeline(idx){
+
+if(confirm('Delete this milestone?')){
+
+state.timeline.splice(idx,1);
+
+save();
+
+}
+
+}
+
+function exportBackup(){
+
+const blob = new Blob(
+[JSON.stringify(state,null,2)],
+{type:'application/json'}
+);
+
+const a = document.createElement('a');
+
+a.href = URL.createObjectURL(blob);
+
+a.download = 'elysian-backup.json';
+
+a.click();
+
+}
+
+function showView(viewId,element){
+
+document.querySelectorAll('.view').forEach(v=>{
+
+v.classList.remove('active');
+
+});
+
+document.getElementById(viewId)
+.classList.add('active');
+
+document.querySelectorAll('.nav-item').forEach(i=>{
+
+i.classList.remove('active');
+
+});
+
+element.classList.add('active');
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}
+
+function resetAllData(){
+
+const approved = confirm(
+'WARNING: This will erase all project data permanently.'
+);
+
+if(!approved) return;
+
+localStorage.removeItem(STORAGE_KEY);
+
+indexedDB.deleteDatabase(DB_NAME);
+
+location.reload();
+
+}
+
+window.onload = render;
+
+</script>
+
+</body>
+</html>
